@@ -1,11 +1,11 @@
 <?php
 
 // variabel
-$kunci = "";
-$kode = "";
-$error = "";
-$valid = true;
-$color = "#FF0000";
+$kunci = ""; #variabel password untuk kunci pergeseran
+$kode = ""; #untuk pengisian plaintext
+$error = ""; #pesan jika adanya kesalahan atau sudah sukses
+$valid = true; #variabel untuk inputan yang sudah benar
+$color = "#FF0000"; #variabel warna untuk text/box/dsb
 
 // jika form di submit
 if ($_SERVER['REQUEST_METHOD'] == "POST")
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
 	{
 		if (!ctype_alpha($_POST['kunci']))
 		{
-			$error = "Kunci hanya boleh di isi dengan huruf!";
+			$error = "Kunci hanya boleh di isi dengan huruf!"; #Kunci vigenere cipher harus diisi dengan huruf saja (tanpa spasi)
 			$valid = false;
 		}
 	}
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
 		if (isset($_POST['enkripsi']))
 		{
 			$kode = enkripsi($kunci, $kode);
-			$error = "Teks berhasil dienkripsi!";
+			$error = "Teks berhasil dienkripsi!"; #Error disini bukan berarti kesalahan, namun pesan apakah berhasil atau tidak
 			$color = "#526F35";
 		}
 			
@@ -80,31 +80,43 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
 	</head>
 	<body>
 		<br><br><br>
-		<form action="index.php" method="post">
+		<form action="index.php" method="POST">
 			<table cellpadding="5" align="center" cellpadding="2" border="7">
+
+				<!-- Beri judul di atas kotak input -->
 				<caption><hr><b>Tugas Vigenere Cipher</b><hr></caption>
+
+				<!-- Tempat input kunci yang akan digunakan -->
 				<tr>
 					<td align="center">Kunci: <input type="text" name="kunci" id="pass" value="<?php echo $kunci; ?>" /></td>
 				</tr>
+
+				<!-- Masukkan text yang ingin dienkripsi/dekripsi -->
 				<tr>
 					<td align="center"><textarea id="box" name="kode">Isikan plaintextnya..</textarea></td>
 				</tr>
+
+				<!-- Buat tombol untuk menjalankan enkripsi dan dekripsi -->
 				<tr>
 					<td><input type="submit" name="enkripsi" class="button" value="Enkrip" onclick="validate(1)" /></td>
 				</tr>
 				<tr>
 					<td><input type="submit" name="dekripsi" class="button" value="Dekrip" onclick="validate(2)" /></td>
 				</tr>
+
+				<!-- Beri tanda jika sukses atau ada kesalahan -->
 				<tr>
 					<td><center><div style="color: <?php echo $color ?>"><?php echo $error ?></div></center></td>
 				</tr>
+
+				<!-- Tampilkan hasil output -->
 				<tr>
 					<td><center><div style="color: <?php echo $color ?>"><?php echo 'Kunci : ', $kunci ?></div></center></td>
 				</tr>
 				<tr>
 					<td><center><div style="color: <?php echo $color ?>"><?php echo 'Ciphertext : ', $kode ?></div></center></td>
 				</tr>
-                <tr></tr>
+
 			</table>
 		</form>
 	</body>
